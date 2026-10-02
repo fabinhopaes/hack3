@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Fit — Premium Fitness & Health</title>
+  <link rel="icon" type="image/png" href="lifefit/assets/logoclara.png">
+  <link rel="apple-touch-icon" href="lifefit/assets/logoclara.png">
+  
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Fontes Google & FontAwesome para Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- ================= NAVEGAÇÃO LATERAL (SIDEBAR) ================= -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="logo">
+        <img src="WhatsApp_Image_2026-10-02_at_09.51.56-removebg-preview.png" alt="Life Fit Fitness Club">
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="#" class="nav-link active" data-tab="dashboard">
+          <i class="fa-solid fa-chart-pie"></i> Painel Principal
+        </a>
+        <a href="#" class="nav-link" data-tab="workouts">
+          <i class="fa-solid fa-dumbbell"></i> Módulo Treino
+        </a>
+        <a href="#" class="nav-link" data-tab="diet">
+          <i class="fa-solid fa-utensils"></i> Módulo Dieta
+        </a>
+        <a href="#" class="nav-link" data-tab="imc">
+          <i class="fa-solid fa-calculator"></i> Calculadora IMC
+        </a>
+        <a href="#" class="nav-link" data-tab="profile">
+          <i class="fa-solid fa-user-gear"></i> Perfil & Metas
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-account">
+      <div class="user-mini-profile">
+        <span class="avatar-placeholder" aria-hidden="true"><i class="fa-solid fa-user"></i></span>
+        <div class="user-info">
+          <span class="user-name" id="user-name">Carregando perfil...</span>
+          <span class="user-status" id="user-email">Conta Life Fit</span>
+        </div>
+      </div>
+      <button class="logout-button" id="logout-button" type="button">
+        <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
+        <span>Sair da conta</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= ÁREA PRINCIPAL DA APLICAÇÃO ================= -->
+  <main class="main-content">
+    
+    <!-- TOPBAR / HEADER -->
+    <header class="topbar">
+      <div class="welcome-text">
+        <h1 id="page-title">IMC</h1>
+        <p>Acompanhe e supere seus limites diariamente com o Life Fit.</p>
+      </div>
+
+      <div class="topbar-actions">
+        <!-- Badge Interativo de Ofensiva -->
+        <div class="streak-widget" id="streak-widget">
+          <div class="streak-fire"><i class="fa-solid fa-fire"></i></div>
+          <button class="streak-calendar-trigger" id="streak-calendar-trigger" type="button" aria-haspopup="dialog" aria-controls="streak-calendar-dialog" aria-label="Abrir calendário de dias treinados">
+            <span class="streak-details">
+              <span class="streak-count"><span id="streak-num">0</span> <span id="streak-unit">dias</span></span>
+              <span class="streak-label">Ofensiva ativa</span>
+            </span>
+          </button>
+          <button class="btn-checkin" id="btn-checkin" type="button">Registrar treino</button>
+        </div>
+
+        <button class="icon-btn notification-trigger" id="notification-trigger" type="button" title="Notificações" aria-label="Abrir notificações" aria-haspopup="dialog" aria-expanded="false" aria-controls="notification-dialog">
+          <i class="fa-regular fa-bell" aria-hidden="true"></i>
+          <span class="notification-count" id="notification-count" hidden aria-hidden="true"></span>
+        </button>
+      </div>
+    </header>
+
+    <dialog class="notification-dialog" id="notification-dialog" aria-labelledby="notification-title">
+      <section class="notification-panel">
+        <header class="notification-header">
+          <div>
+            <span class="streak-calendar-kicker">SEU ESPAÇO LIFE FIT</span>
+            <h2 id="notification-title">Notificações</h2>
+          </div>
+          <div class="notification-actions">
+            <button class="notification-mark-read" id="notification-mark-read" type="button">Marcar como lidas</button>
+            <button class="streak-calendar-close" id="notification-close" type="button" aria-label="Fechar notificações"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+          </div>
+        </header>
+        <ul class="notification-list" id="notification-list" aria-live="polite"></ul>
+        <p class="notification-empty" id="notification-empty" hidden>Nenhuma notificação no momento.</p>
+      </section>
+    </dialog>
+
+    <dialog class="streak-calendar-dialog" id="streak-calendar-dialog" aria-labelledby="streak-calendar-title">
+      <div class="streak-calendar">
+        <header class="streak-calendar-header">
+          <div>
+            <span class="streak-calendar-kicker">SUA CONSISTÊNCIA</span>
+            <h2 id="streak-calendar-title">Dias treinados</h2>
+          </div>
+          <button class="streak-calendar-close" id="streak-calendar-close" type="button" aria-label="Fechar calendário"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        </header>
+        <div class="streak-calendar-month">
+          <button id="streak-calendar-prev" type="button" aria-label="Mês anterior"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+          <strong id="streak-calendar-month-label"></strong>
+          <button id="streak-calendar-next" type="button" aria-label="Próximo mês"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+        </div>
+        <div class="streak-calendar-grid" id="streak-calendar-grid" role="grid" aria-label="Calendário de dias treinados"></div>
+        <p class="streak-calendar-legend"><span aria-hidden="true"><i class="fa-solid fa-check"></i></span> Treino registrado neste dia</p>
+        <p class="streak-calendar-note">Use “Registrar treino” após concluir uma sessão para marcar o dia.</p>
+      </div>
+    </dialog>
+
+    <!-- CONTEÚDO DAS ABAS -->
+    <div class="tab-content-container">
+
+      <!-- ================= ABA 1: DASHBOARD ================= -->
+      <section id="tab-dashboard" class="tab-content active">
+        
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+          <div class="hero-text">
+            <span class="tag">LIFE FIT RITUAL</span>
+            <h2 id="dashboard-greeting">Sua jornada começa aqui</h2>
+            <p id="dashboard-guidance">Entre no seu perfil para definir suas metas e acompanhar sua evolução.</p>
+            <button class="btn-primary start-workout-btn" id="dashboard-workout-link" type="button"><i class="fa-solid fa-dumbbell"></i> Ver meus treinos</button>
+          </div>
+          <div class="hero-overlay"></div>
+        </div>
+
+        <!-- Métrica Cards Grid -->
+        <div class="metrics-grid">
+          
+          <div class="metric-card">
+            <div class="card-icon"><i class="fa-solid fa-bullseye"></i></div>
+            <div class="card-body">
+              <span class="card-title">Meu objetivo</span>
+              <div class="value-group">
+                <span class="value dashboard-metric-value" id="dashboard-objective">Carregando...</span>
+              </div>
+              <span class="status-pill" id="dashboard-objective-status">Dados da sua conta</span>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="card-body">
+              <span class="card-title">Nível de treino</span>
+              <div class="value-group">
+                <span class="value dashboard-metric-value" id="dashboard-training-level">Carregando...</span>
+              </div>
+              <span class="subtext" id="dashboard-training-hint">Definido nas suas metas</span>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="card-icon"><i class="fa-solid fa-calendar-check"></i></div>
+            <div class="card-body">
+              <span class="card-title">Treinos neste mês</span>
+              <div class="value-group">
+                <span class="value" id="dashboard-training-count">0</span>
+                <span class="unit">dias registrados</span>
+              </div>
+              <span class="subtext" id="dashboard-training-count-hint">Sincronizado com sua conta</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Insights e Treinos em Destaque -->
+        <div class="dashboard-secondary-grid">
+          <div class="insight-card">
+            <div class="insight-header">
+              <i class="fa-solid fa-lightbulb"></i>
+              <h3>Seu próximo passo</h3>
+            </div>
+            <p id="dashboard-insight">Suas metas e registros aparecerão aqui assim que sua conta for carregada.</p>
+            <p class="dashboard-data-status" id="dashboard-data-status" aria-live="polite"></p>
+          </div>
+
+          <div class="quick-workout-card">
+            <h3>Último treino registrado</h3>
+            <div class="activity-item">
+              <span class="dashboard-activity-icon" aria-hidden="true"><i class="fa-solid fa-dumbbell"></i></span>
+              <div class="activity-details">
+                <h4 id="dashboard-last-training">Nenhum treino registrado</h4>
+                <p id="dashboard-last-training-date">Registre um treino para iniciar seu histórico.</p>
+              </div>
+              <span class="badge-done" id="dashboard-training-badge" hidden><i class="fa-solid fa-check"></i> Registrado</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= ABA 2: TREINOS ================= -->
+      <section id="tab-workouts" class="tab-content">
+        <div class="section-header">
+          <h2>Seus Planos de Treino</h2>
+          <p>Escolha uma rotina ou monte o seu treino personalizado no Life Fit.</p>
+        </div>
+        <section class="progress-chart-card" aria-labelledby="workout-volume-title">
+          <div class="progress-chart-heading">
+            <div>
+              <span class="diet-kicker">SUA EVOLUÇÃO</span>
+              <h3 id="workout-volume-title">Volume de treino ao longo do tempo</h3>
+              <p>Volume por sessão: carga × séries e repetições realizadas (kg·rep).</p>
+            </div>
+          </div>
+          <div class="progress-chart" id="workout-volume-chart" role="img" aria-label="Gráfico do volume de treino ao longo do tempo"></div>
+        </section>
+
+        <div class="workouts-grid">
+          
+          <div class="workout-card">
+            <div class="workout-img-container">
+              <img src="https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?auto=format&fit=crop&q=80&w=600" alt="Peito e Tríceps">
+              <span class="level-tag">Avançado</span>
+            </div>
+            <div class="workout-content">
+              <h3>Treino A — Peito & Tríceps</h3>
+              <p>4 Séries de Supino Reto, Supino Inclinado, Crossover e Tríceps Testa.</p>
+              <div class="workout-meta">
+                <span><i class="fa-regular fa-clock"></i> ~63 min</span>
+                <span><i class="fa-solid fa-fire"></i> ~350 kcal</span>
+              </div>
+              <button class="btn-secondary" type="button" data-workout="a">Ver Exercícios</button>
+            </div>
+          </div>
+
+          <div class="workout-card">
+            <div class="workout-img-container">
+              <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&q=80&w=600" alt="Costas e Biceps">
+              <span class="level-tag">Intermediário</span>
+            </div>
+            <div class="workout-content">
+              <h3>Treino B — Costas & Biceps</h3>
+              <p>Puxada Alta, Remada Curvada, Pulldown e Rosca Direta com Barra W.</p>
+              <div class="workout-meta">
+                <span><i class="fa-regular fa-clock"></i> ~63 min</span>
+                <span><i class="fa-solid fa-fire"></i> ~350 kcal</span>
+              </div>
+              <button class="btn-secondary" type="button" data-workout="b">Ver Exercícios</button>
+            </div>
+          </div>
+
+          <div class="workout-card">
+            <div class="workout-img-container">
+              <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&q=80&w=600" alt="Treino de quadríceps">
+              <span class="level-tag">Insano</span>
+            </div>
+            <div class="workout-content">
+              <h3>Treino C — Quadríceps</h3>
+              <p>Agachamento, Leg Press, Cadeira Extensora e Passada.</p>
+              <div class="workout-meta">
+                <span><i class="fa-regular fa-clock"></i> ~63 min</span>
+                <span><i class="fa-solid fa-fire"></i> ~400 kcal</span>
+              </div>
+              <button class="btn-secondary" type="button" data-workout="c">Ver Exercícios</button>
+            </div>
+          </div>
+
+          <div class="workout-card">
+            <div class="workout-img-container">
+              <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=600" alt="Treino de posterior e glúteo">
+              <span class="level-tag">Avançado</span>
+            </div>
+            <div class="workout-content">
+              <h3>Treino D — Posterior & Glúteo</h3>
+              <p>Stiff, Elevação Pélvica, Mesa Flexora e Cadeira Abdutora.</p>
+              <div class="workout-meta">
+                <span><i class="fa-regular fa-clock"></i> ~58 min</span>
+                <span><i class="fa-solid fa-fire"></i> ~380 kcal</span>
+              </div>
+              <button class="btn-secondary" type="button" data-workout="d">Ver Exercícios</button>
+            </div>
+          </div>
+
+        </div>
+
+        <section class="workout-detail" id="workout-detail" hidden aria-live="polite">
+          <button class="btn-back-workouts" id="btn-back-workouts" type="button">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Voltar aos treinos
+          </button>
+          <div id="workout-detail-content"></div>
+        </section>
+      </section>
+
+      <!-- ================= ABA 3: DIETA ================= -->
+      <section id="tab-diet" class="tab-content">
+        <div class="section-header">
+          <h2>Plano Nutricional</h2>
+          <p>Acompanhe suas refeições e distribuição de macronutrientes.</p>
+        </div>
+
+        <div class="diet-profile-step" id="diet-profile-step">
+          <section class="diet-panel-card">
+            <div class="diet-profile-intro">
+              <span class="diet-kicker">PLANO ALIMENTAR</span>
+              <h3>Conte um pouco sobre você</h3>
+              <p>Com esses dados, montamos sugestões de refeições de acordo com seu objetivo.</p>
+            </div>
+            <form id="diet-profile-form" class="diet-profile-form">
+              <div class="diet-profile-fields">
+                <div class="diet-profile-field">
+                  <label for="diet-weight">Peso atual (kg)</label>
+                  <input id="diet-weight" name="weight" type="number" min="25" max="350" step="0.1" placeholder="Ex.: 70" required>
+                </div>
+                <div class="diet-profile-field">
+                  <label for="diet-height">Altura (cm)</label>
+                  <input id="diet-height" name="height" type="number" min="100" max="230" step="1" placeholder="Ex.: 170" required>
+                </div>
+                <div class="diet-profile-field">
+                  <label for="diet-age">Idade</label>
+                  <input id="diet-age" name="age" type="number" min="18" max="100" placeholder="Ex.: 30" required>
+                </div>
+                <div class="diet-profile-field">
+                  <label for="diet-sex">Sexo biológico</label>
+                  <select id="diet-sex" name="sex" required>
+                    <option value="" selected disabled>Selecione</option>
+                    <option value="female">Feminino</option>
+                    <option value="male">Masculino</option>
+                    <option value="unspecified">Prefiro não informar</option>
+                  </select>
+                </div>
+                <div class="diet-profile-field diet-profile-goal">
+                  <label for="diet-goal">Qual é seu objetivo?</label>
+                  <select id="diet-goal" name="goal" required>
+                    <option value="" selected disabled>Selecione seu foco</option>
+                    <option value="fat-loss">Emagrecer / perder gordura</option>
+                    <option value="muscle-gain">Ganhar massa muscular</option>
+                    <option value="maintain">Manter o peso</option>
+                    <option value="performance">Melhorar o desempenho</option>
+                    <option value="healthy-habits">Melhorar meus hábitos</option>
+                  </select>
+                </div>
+              </div>
+              <p id="diet-profile-error" class="diet-profile-error" aria-live="polite"></p>
+              <button class="btn-primary" type="submit"><i class="fa-solid fa-utensils" aria-hidden="true"></i> Montar minha dieta</button>
+            </form>
+            <p class="diet-disclaimer">Sugestões gerais para adultos, não substituem orientação de nutricionista. Menores de 18 anos, pessoas gestantes ou com condições de saúde devem buscar acompanhamento profissional. Necessidades variam com rotina, treino e preferências.</p>
+          </section>
+        </div>
+
+        <div class="diet-plan-view" id="diet-plan-view" hidden>
+        <div class="diet-plan-overview" id="diet-plan-overview">
+        <section class="diet-panel-card diet-focus">
+          <div>
+            <span class="diet-kicker">SEU OBJETIVO</span>
+            <h3 id="diet-plan-goal"></h3>
+            <p id="diet-goal-guidance" aria-live="polite"></p>
+          </div>
+          <button id="btn-edit-diet-profile" class="diet-edit-profile" type="button"><i class="fa-solid fa-pen" aria-hidden="true"></i> Editar perfil</button>
+        </section>
+
+        <section class="diet-panel-card hydration-panel" aria-labelledby="hydration-title">
+          <div class="hydration-heading">
+            <span class="hydration-icon"><i class="fa-solid fa-droplet" aria-hidden="true"></i></span>
+            <div>
+              <h3 id="hydration-title">Sua hidratação diária</h3>
+              <p id="hydration-context"></p>
+            </div>
+          </div>
+          <strong id="hydration-target"></strong>
+          <p class="hydration-note">Faixa geral: 30 a 35 ml/kg até 64 anos e 25 a 30 ml/kg a partir de 65. Peso e idade definem a faixa; altura e sexo aparecem no contexto do perfil e do IMC, mas não alteram essa estimativa. Calor, exercício, gestação e condições de saúde podem mudar a necessidade. Não force a ingestão de água.</p>
+        </section>
+
+        <section class="diet-goals-grid" aria-label="Metas de alimentação e peso">
+          <article class="diet-panel-card diet-goal-card">
+            <div class="diet-card-heading">
+              <span class="diet-goal-icon" aria-hidden="true"><i class="fa-solid fa-bullseye"></i></span>
+              <div><h3>Metas diárias</h3><p>Defina seus alvos pessoais.</p></div>
+            </div>
+            <form id="diet-goals-form" class="diet-goals-form">
+              <div class="diet-profile-field">
+                <label for="diet-target-weight">Meta de peso (kg)</label>
+                <input id="diet-target-weight" type="number" min="25" max="350" step="0.1" required>
+              </div>
+              <div class="diet-profile-field">
+                <label for="diet-target-calories">Meta calórica diária (kcal)</label>
+                <input id="diet-target-calories" type="number" min="500" max="10000" step="50" required>
+              </div>
+              <p class="diet-target-guidance" id="diet-target-guidance"></p>
+              <p class="diet-profile-error" id="diet-goals-status" aria-live="polite"></p>
+              <button class="btn-primary" type="submit">Salvar metas</button>
+            </form>
+          </article>
+
+          <article class="diet-panel-card weight-history-card">
+            <div class="diet-card-heading">
+              <span class="diet-goal-icon" aria-hidden="true"><i class="fa-solid fa-weight-scale"></i></span>
+              <div><h3>Peso corporal</h3><p>Registre uma medida para acompanhar sua evolução.</p></div>
+            </div>
+            <form id="weight-entry-form" class="weight-entry-form">
+              <div class="diet-profile-field">
+                <label for="weight-entry-value">Peso de hoje (kg)</label>
+                <input id="weight-entry-value" type="number" min="25" max="350" step="0.1" required>
+              </div>
+              <button class="btn-secondary" type="submit">Registrar peso</button>
+            </form>
+            <p class="diet-profile-error" id="weight-entry-status" aria-live="polite"></p>
+            <div class="progress-chart" id="weight-history-chart" role="img" aria-label="Gráfico do peso corporal ao longo do tempo"></div>
+          </article>
+        </section>
+
+        <section class="diet-panel-card calorie-progress-card" aria-labelledby="calorie-progress-title">
+          <div class="progress-chart-heading">
+            <div><span class="diet-kicker">ALIMENTAÇÃO</span><h3 id="calorie-progress-title">Calorias consumidas × meta</h3>
+              <p>Registre uma refeição como consumida para acompanhar o total do dia.</p>
+            </div>
+          </div>
+          <div class="calorie-today-summary" id="calorie-today-summary"></div>
+          <div class="progress-chart" id="calorie-history-chart" role="img" aria-label="Gráfico de calorias consumidas e meta diária"></div>
+        </section>
+
+        <section class="diet-panel-card workout-diet-insight-card" aria-labelledby="workout-diet-insight-title">
+          <div class="progress-chart-heading">
+            <div><span class="diet-kicker">TREINO + DIETA</span><h3 id="workout-diet-insight-title">Como seus registros se cruzam</h3></div>
+          </div>
+          <p id="workout-diet-insight" aria-live="polite">Registre treinos e refeições consumidas para ver um resumo combinado.</p>
+        </section>
+
+        <div class="diet-panel-card diet-dashboard">
+          <div class="meals-panel">
+            <div class="meals-heading">
+              <h3>Refeições</h3>
+              <p>Escolha uma refeição para editar os alimentos.</p>
+            </div>
+            <div class="meals-list" id="meals-list"></div>
+          </div>
+        </div>
+        </div>
+
+        <section class="meal-detail" id="meal-detail" hidden aria-live="polite">
+          <button class="btn-back-workouts" id="btn-back-meals" type="button">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Voltar às refeições
+          </button>
+          <div id="meal-detail-content"></div>
+        </section>
+        </div>
+      </section>
+
+      <!-- ================= ABA 4: CALCULADORA IMC ================= -->
+      <section id="tab-imc" class="tab-content">
+        <div class="imc-calculator-container">
+          <div class="imc-form-box">
+            <h2>Calculadora de IMC Interativa</h2>
+            <p>Descubra seu Índice de Massa Corporal instantaneamente.</p>
+            
+            <form id="imc-form">
+              <div class="input-group">
+                <label for="sexo">Sexo</label>
+                <select id="sexo" required>
+                  <option value="" disabled selected>Selecione</option>
+                  <option value="Mulher">Mulher</option>
+                  <option value="Homem">Homem</option>
+                </select>
+              </div>
+
+              <div class="input-group">
+                <label for="idade">Idade</label>
+                <input type="number" id="idade" placeholder="Ex: 30" min="1" max="120" required>
+              </div>
+
+              <div class="input-group">
+                <label for="peso">Peso (kg)</label>
+                <input type="number" id="peso" placeholder="Ex: 70" min="1" max="500" step="0.1" required>
+              </div>
+
+              <div class="input-group">
+                <label for="altura">Altura (cm)</label>
+                <input type="number" id="altura" placeholder="Ex: 175" min="50" max="300" required>
+              </div>
+
+              <button type="submit" class="btn-primary">Calcular Meu IMC</button>
+            </form>
+          </div>
+
+          <div class="imc-result-box" id="imc-result-box">
+            <h3>Seu Resultado</h3>
+            <div class="imc-circle">
+              <span id="imc-value">--.-</span>
+              <small>kg/m²</small>
+            </div>
+            <p id="imc-classification" class="imc-status-text">Preencha o formulário para calcular.</p>
+            <p id="imc-details" class="imc-status-text"></p>
+            <p id="body-metrics-sync-status" class="imc-sync-status" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ABA 5: PERFIL ================= -->
+      <section id="tab-profile" class="tab-content">
+        <div class="profile-header-card">
+          <span class="profile-avatar-placeholder" aria-hidden="true"><i class="fa-solid fa-user"></i></span>
+          <div class="profile-main-info">
+            <span class="profile-kicker">SEU ESPAÇO LIFE FIT</span>
+            <h2 id="profile-name">Carregando perfil...</h2>
+            <p><i class="fa-regular fa-envelope" aria-hidden="true"></i> <span id="profile-email">Buscando dados da conta...</span></p>
+          </div>
+          <span class="profile-account-badge" id="profile-account-status"><i class="fa-regular fa-circle" aria-hidden="true"></i> Conta</span>
+        </div>
+
+        <section class="profile-goals-panel" aria-labelledby="profile-goals-title">
+          <header class="profile-goals-heading">
+            <span class="profile-goals-icon" aria-hidden="true"><i class="fa-solid fa-bullseye"></i></span>
+            <div>
+              <span class="profile-kicker">PERSONALIZE SUA JORNADA</span>
+              <h3 id="profile-goals-title">Metas e preferências</h3>
+              <p>Defina seu foco atual e seu nível de treino. Suas escolhas ficam salvas na sua conta.</p>
+            </div>
+          </header>
+          <form id="profile-goals-form" class="profile-goals-form">
+            <div class="profile-goals-fields">
+              <div class="profile-goal-field">
+                <label for="profile-objective">Meu objetivo</label>
+                <select id="profile-objective" name="objective" required>
+                  <option value="" selected disabled>Escolha seu objetivo</option>
+                  <option value="fat-loss">Emagrecer / perder gordura</option>
+                  <option value="muscle-gain">Ganhar massa muscular</option>
+                  <option value="maintain">Manter o peso</option>
+                  <option value="performance">Melhorar o desempenho</option>
+                  <option value="healthy-habits">Melhorar meus hábitos</option>
+                </select>
+              </div>
+              <div class="profile-goal-field">
+                <label for="profile-training-level">Nível de treino</label>
+                <select id="profile-training-level" name="trainingLevel" required>
+                  <option value="" selected disabled>Escolha seu nível</option>
+                  <option value="beginner">Iniciante</option>
+                  <option value="intermediate">Intermediário</option>
+                  <option value="advanced">Avançado</option>
+                </select>
+              </div>
+            </div>
+            <div class="profile-goals-footer">
+              <p id="profile-goals-status" aria-live="polite">As metas serão sincronizadas com sua conta Life Fit.</p>
+              <button class="btn-primary" type="submit"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Salvar metas</button>
+            </div>
+          </form>
+        </section>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script src="firebase-profile.js"></script>
+</body>
+</html>

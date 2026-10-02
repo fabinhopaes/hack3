@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Fit - Login</title>
+    <link rel="icon" type="image/png" href="lifefit/assets/logoclara.png">
+    <link rel="apple-touch-icon" href="lifefit/assets/logoclara.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="lifefit/style.css">
+</head>
+<body class="auth-body">
+
+    <div class="auth-container">
+        <!-- LADO ESQUERDO: BANNER -->
+        <section class="auth-banner">
+            <header class="auth-brand-header">
+                <div class="auth-brand-logo">LF</div>
+                <div class="auth-brand-info">
+                    <h2>Life Fit</h2>
+                    <span>FITNESS CLUB</span>
+                </div>
+            </header>
+
+            <main class="auth-banner-content">
+                <span class="auth-banner-tag">LIFE FIT / HACKTOON</span>
+                <h1 class="auth-banner-title">Seu corpo.<br>Seus dados.<br>Sua evolução.</h1>
+                <p class="auth-banner-description">
+                    Uma experiência integrada para acompanhar treino, alimentação, composição corporal e evolução em um único lugar.
+                </p>
+            </main>
+
+            <footer class="auth-banner-footer">
+                • PEQUENOS HÁBITOS, GRANDES RESULTADOS.
+            </footer>
+        </section>
+
+        <!-- LADO DIREITO: FORMULÁRIO -->
+        <section class="auth-form-wrapper">
+            <div class="auth-form-box">
+                <header class="auth-form-header">
+                    <span class="auth-form-subtitle">BEM-VINDA DE VOLTA</span>
+                    <h2 class="auth-form-title">Entrar na sua conta</h2>
+                    <p class="auth-form-description">Continue acompanhando sua evolução.</p>
+                </header>
+
+                <form class="auth-form" action="#" method="POST">
+                    <div class="auth-input-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" value="fernanda.c.costa9@aluno.senai.br" required>
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+                    </div>
+
+                    <button type="submit" class="auth-btn-submit">Entrar</button>
+
+                    <p class="auth-form-footer-link">
+                        Ainda não possui uma conta? <a href="loginecadastro.html?modo=cadastro">Criar conta</a>
+                    </p>
+                </form>
+
+                <div class="auth-demo-notice">
+                    Seus dados demonstrativos são armazenados localmente neste navegador para fins de protótipo do HackToon.
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script type="module" src="auth.js"></script>
+
+</body>
+</html>

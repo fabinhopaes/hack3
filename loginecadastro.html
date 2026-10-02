@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Fit - Fitness Club</title>
+  <link rel="icon" type="image/png" href="lifefit/assets/logoclara.png">
+  <link rel="apple-touch-icon" href="lifefit/assets/logoclara.png">
+  
+  <!-- Fonte Google (Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    :root {
+      --bg-dark: #3a2a22;
+      --bg-dark-accent: #2c1f19;
+      --bg-light: #f4eee7;
+      --card-light: #ffffff;
+      --btn-dark: #1f1813;
+      --btn-hover: #332720;
+      --text-dark: #1a1a1a;
+      --text-muted: #736b63;
+      --text-light: #f4eee7;
+      --text-light-sub: #bbaea2;
+      --notice-bg: #e8ded2;
+      --notice-text: #8c8075;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      background-color: var(--bg-light);
+    }
+
+    .container {
+      display: flex;
+      width: 100vw;
+      min-height: 100vh;
+    }
+
+    /* SEÇÃO ESQUERDA (MARROM) */
+    .left-panel {
+      flex: 1;
+      background: radial-gradient(circle at bottom right, var(--bg-dark-accent), var(--bg-dark));
+      color: var(--text-light);
+      padding: 3rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .left-panel::after {
+      content: '';
+      position: absolute;
+      bottom: -150px;
+      right: -150px;
+      width: 500px;
+      height: 500px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .logo{
+      width: 260px;
+      height: 260px;
+    }
+
+    .brand-text h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .brand-text span {
+      font-size: 0.65rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-light-sub);
+    }
+
+    .hero-content {
+      max-width: 400px;
+      position: relative;
+      top: -3cm;
+    }
+
+    .hero-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-light-sub);
+      margin-bottom: 1.0rem;
+    }
+
+    .hero-title {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-light-sub);
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .footer-tag {
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-light-sub);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-tag::before {
+      content: '•';
+      font-size: 1.2rem;
+    }
+
+    /* SEÇÃO DIREITA (BEGE) */
+    .right-panel {
+      flex: 1;
+      background-color: var(--bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .form-wrapper {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .form-header {
+      margin-bottom: 2rem;
+    }
+
+    .form-subtitle-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .form-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    .form-description {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background-color: var(--card-light);
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-group input::placeholder {
+      color: #c0b7af;
+    }
+
+    .form-group input:focus {
+      border-color: var(--bg-dark);
+      box-shadow: 0 0 0 2px rgba(58, 42, 34, 0.1);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 0.9rem;
+      background-color: var(--btn-dark);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background-color 0.2s;
+    }
+
+    .btn-submit:hover {
+      background-color: var(--btn-hover);
+    }
+
+    .switch-form {
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .switch-form a {
+      color: var(--text-dark);
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .switch-form a:hover {
+      text-decoration: underline;
+    }
+
+    .demo-notice {
+      margin-top: 2rem;
+      background-color: var(--notice-bg);
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      color: var(--notice-text);
+      line-height: 1.4;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+      }
+      .left-panel {
+        padding: 2.5rem 2rem;
+        min-height: 380px;
+      }
+      .hero-title {
+        font-size: 2.2rem;
+      }
+      .right-panel {
+        padding: 2.5rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- BANNER ESQUERDO -->
+    <section class="left-panel">
+      <div class="brand">
+        <img class="logo" src="WhatsApp_Image_2026-10-02_at_09.51.56-removebg-preview.png" alt="" srcset="">
+        <div class="brand-logo"></div>
+        <div class="brand-text">
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <p class="hero-tag" id="hero-tag">Life Fit / Hacktoon</p>
+        <h2 class="hero-title" id="hero-title">Seu corpo.<br>Seus dados.<br>Sua evolução.</h2>
+        <p class="hero-subtitle" id="hero-subtitle">
+          Uma experiência integrada para acompanhar treino, alimentação, composição corporal e evolução em um único lugar.
+        </p>
+      </div>
+
+      <div class="footer-tag" id="hero-footer-tag">
+        Pequenos hábitos. Grandes resultados.
+      </div>
+    </section>
+
+    <!-- FORMULÁRIOS DIREITOS -->
+    <section class="right-panel">
+      <div class="form-wrapper">
+
+        <!-- TELA DE LOGIN -->
+        <div id="login-screen">
+          <div class="form-header">
+            <p class="form-subtitle-tag">Bem-vinda de volta</p>
+            <h2 class="form-title">Entrar na sua conta</h2>
+            <p class="form-description">Continue acompanhando sua evolução.</p>
+          </div>
+
+          <form id="login-form">
+            <div class="form-group">
+              <label for="login-email">E-mail</label>
+              <input type="email" id="login-email" placeholder="seuemail@email.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="login-password">Senha</label>
+              <input type="password" id="login-password" placeholder="Digite sua senha" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Entrar</button>
+          </form>
+
+          <p class="switch-form">
+            Ainda não possui uma conta? <a id="btn-to-register">Criar conta</a>
+          </p>
+
+          <div class="demo-notice">
+                Seus dados demonstrativos são armazenados no firebase para fins de protótipo do Hackathon.
+          </div>
+        </div>
+
+        <!-- TELA DE CRIAR CONTA -->
+        <div id="register-screen" class="hidden">
+          <div class="form-header">
+            <p class="form-subtitle-tag">Life Fit</p>
+            <h2 class="form-title">Criar sua conta</h2>
+            <p class="form-description">Preencha seus dados para começar.</p>
+          </div>
+
+          <form id="register-form">
+            <div class="form-group">
+              <label for="reg-name">Nome</label>
+              <input type="text" id="reg-name" placeholder="Como podemos te chamar?" required>
+            </div>
+
+            <div class="form-group">
+              <label for="reg-email">E-mail</label>
+              <input type="email" id="reg-email" placeholder="seuemail@email.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="reg-password">Senha</label>
+              <input type="password" id="reg-password" minlength="6" placeholder="Crie uma senha" required>
+            </div>
+
+            <div class="form-group">
+              <label for="reg-confirm-password">Confirmar senha</label>
+              <input type="password" id="reg-confirm-password" minlength="6" placeholder="Digite a senha novamente" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Criar minha conta</button>
+          </form>
+
+          <p class="switch-form">
+            Já possui uma conta? <a id="btn-to-login">Entrar</a>
+          </p>
+
+          <div class="demo-notice">
+            Seus dados demonstrativos são armazenados no firebase para fins de protótipo do Hackathon.
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const loginScreen = document.getElementById('login-screen');
+    const registerScreen = document.getElementById('register-screen');
+    const btnToRegister = document.getElementById('btn-to-register');
+    const btnToLogin = document.getElementById('btn-to-login');
+
+    const heroTag = document.getElementById('hero-tag');
+    const heroTitle = document.getElementById('hero-title');
+    const heroSubtitle = document.getElementById('hero-subtitle');
+    const heroFooterTag = document.getElementById('hero-footer-tag');
+
+    btnToRegister.addEventListener('click', () => {
+      loginScreen.classList.add('hidden');
+      registerScreen.classList.remove('hidden');
+
+      heroTag.textContent = "Comece sua jornada";
+      heroTitle.innerHTML = "Um novo<br>jeito de<br>cuidar de você.";
+      heroSubtitle.textContent = "Registre seus treinos, acompanhe sua alimentação e transforme seus próprios dados em informação para entender sua evolução.";
+      heroFooterTag.textContent = "Treino + Alimentação + Evolução";
+    });
+
+    btnToLogin.addEventListener('click', () => {
+      registerScreen.classList.add('hidden');
+      loginScreen.classList.remove('hidden');
+
+      heroTag.textContent = "Life Fit / Hacktoon";
+      heroTitle.innerHTML = "Seu corpo.<br>Seus dados.<br>Sua evolução.";
+      heroSubtitle.textContent = "Uma experiência integrada para acompanhar treino, alimentação, composição corporal e evolução em um único lugar.";
+      heroFooterTag.textContent = "Pequenos hábitos. Grandes resultados.";
+    });
+
+    if (new URLSearchParams(window.location.search).get('modo') === 'cadastro') {
+      btnToRegister.click();
+    }
+
+  </script>
+  <script type="module" src="auth.js"></script>
+</body>
+</html>
